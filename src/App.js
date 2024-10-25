@@ -18,7 +18,7 @@ const App = () => {
   const [selectedProductID, setSelectedProductID] = useState(null); // Define selectedProductID state
 
   const handleBuyNowClick = (productID) => {
-    console.log('Product ID:', productID);
+    console.log('Product ID:', productID.productId);
     setSelectedProductID(productID);
     setShowForm(true);
   };
@@ -67,7 +67,7 @@ const App = () => {
       const response = await axios.post('http://localhost:8000/api/chatbot/', { message: userInput });
       
       if (response.data.type === 'reply') {
-        const botMessage = { text: response.data.text, sender: 'bot', time: getCurrentTime() };
+        const botMessage = { text: response.data.message, sender: 'bot', time: getCurrentTime() };
         setMessages((prev) => [...prev, botMessage]);
         console.log(botMessage)
       }       else if (response.data.type === 'product') {

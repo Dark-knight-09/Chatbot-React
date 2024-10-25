@@ -28,10 +28,14 @@ const OrderForm = ({ onClose, onOrderSuccess, productID }) => {
         console.log('formData:', formData);
         const response = await axios.post('http://localhost:8000/api/order/', formData);
         console.log('response:', response);
-        if (response.status === 200) {
-  
-          const { confirmationId, productId, productName, productPrice } = response.data;
-          onOrderSuccess({ confirmationId, productId, productName, productPrice });
+        if (response.status === 200) { 
+                  onOrderSuccess({
+            confirmationId: response.data.order_number,
+            productId: response.data.id,
+            productName: response.data.name,
+            productPrice: response.data.price,
+            order_status: response.data.order_status
+        });
           onClose();
         }
       } catch (error) {
